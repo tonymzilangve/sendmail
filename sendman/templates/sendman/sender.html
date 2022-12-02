@@ -1,0 +1,77 @@
+{# -*- coding: utf-8 -*- #}
+{% extends 'sendman/base.html' %}
+
+{% load static %}
+
+{% block title %}SENDMAN{% endblock %}
+
+{% block content %}
+    {% if message %}
+        <h4 color="green">{{ message }}</h4>
+    {%  endif %}
+
+    <form method="post" class="bootstrap-form" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <br>
+        {% if templates %}
+        <input type="text" name="template" placeholder="Выберите макет" list="templates">
+        <datalist id="templates">
+            {% for name in templates %}
+                <option value="{{ name }}"></option>
+            {% endfor %}
+        </datalist>
+        {% endif %}
+        <a href="{% url 'new_template' %}">Добавить макет</a>
+
+        <br>
+        <br>
+        {% if recipients %}
+        <input type="text" name="recipients" placeholder="Выберите адресатов" list="recipient">
+        <datalist id="recipient">
+            {% for name in recipients %}
+                <option value="{{ name }}"></option>
+            {% endfor %}
+        </datalist>
+        {% endif %}
+        <a href="{% url 'new_recipients' %}">Создать список адресов</a>
+        <br><br>
+
+
+        <input type="checkbox" class="hide" name="repeat" id="myCheck"  onclick="myFunction()">
+            <label for="hd-2">Повторять</label>
+
+        <br>
+        <div id="checkbox_text" style="display:none">
+            <input type="text" name="schedules" placeholder="Выберите интервал" list="schedules">
+            <datalist id="schedules">
+                {% for var in schedules %}
+                    <option value="{{ var }}"></option>
+                {% endfor %}
+            </datalist>
+
+            <br>
+            <div class="col-sm" style="width: 300px" >
+                <details>
+                    <summary>Установить новый интервал</summary>
+                    <br>
+                    <div class="form-outline text-center">
+                        <input type="number" name="minute" id="typeNumber" class="form-control" min="0" max="59"  />
+                        <label class="form-label" for="typeNumber">Minute (0-59) </label>
+                        <input type="number" name="hour" id="typeNumber" class="form-control" min="0" max="23" />
+                        <label class="form-label" for="typeNumber">Hour (0-23)</label>
+                        <input type="number" name="day_of_month" id="typeNumber" class="form-control" min="1" max="31"/>
+                        <label class="form-label" for="typeNumber">Day-Of-Month (1-31) </label>
+                        <input type="number" name="month" id="typeNumber" class="form-control" min="1" max="12" />
+                        <label class="form-label" for="typeNumber">Month (1-12) </label>
+                        <input type="number" name="day_of_week" id="typeNumber" class="form-control" min="0" max="6" />
+                        <label class="form-label" for="typeNumber">Day-Of-Week (0 - 6; Sunday = 0)</label>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <br>
+        <input type="submit" class="btn btn-success" value="РАЗОСЛАТЬ">
+    </form>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'sendman/base.html' %}
+
+{% load static %}
+
+{% block title %}New Template{% endblock %}
+
+{%  block content %}
+    <div style="width: 300px">
+        <br>
+        <form class="bootstrap-form" method="post"  enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% for field in form %}
+                    <div class="form-outline text-center">
+                        <input type="{{field.name}}" name="{{ field.name }}" id="{{field.name}}" class="form-control" />
+                        <label class="form-label" for="{{field.name}}">{{field.label}}</label>
+                    </div>
+            {% endfor %}
+
+            <input type="submit" class="btn btn-success" value="Добавить">
+            <br>
+        </form>
+    </div>
+{% endblock %}
+</body>
+</html>

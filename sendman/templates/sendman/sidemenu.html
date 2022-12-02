@@ -1,0 +1,21 @@
+{% load static %}
+<div id="sidemenu" class="col-3 text-center">
+    <br>
+    <ul>
+        <li>
+            <a href="{% url 'send_email' %}">Главная</a>
+        </li>
+        <br>
+        <li>
+            <a href="{% url 'recipients' %}">Адресаты</a>
+        </li>
+        <br>
+        <li>
+            <a href="{% url 'templates' %}">Макеты</a>
+        </li>
+        <br>
+        <li>
+            <a href="{% url 'history' %}">История</a>
+        </li>
+    </ul>
+</div>

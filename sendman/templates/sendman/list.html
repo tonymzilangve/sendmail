@@ -1,0 +1,38 @@
+{% extends 'sendman/base.html' %}
+
+{% load static %}
+
+{% block title %}New Template{% endblock %}
+
+{%  block content %}
+    <div class="col-sm" style="width: 300px;">
+
+        <form class="bootstrap-form" method="post"  enctype="multipart/form-data">
+            {% csrf_token %}
+
+
+            <div class="form-outline">
+                <br>
+                <div id="list_name" >
+                    {{  form.name }}
+                </div>
+                <label class="form-label text-center" for="list_name">Название</label>
+                <br>
+                <br>
+                <div id="rcpt_list" >
+                    {{  form.subscribers }}
+                </div>
+                <label class="form-label text-center" for="rcpt_list">Список адресатов (напр. Иван Иванов email; )</label>
+            </div>
+            {% if newlist %}
+                <input type="submit" class="btn btn-success" value="Создать">
+            {% else %}
+                <input type="submit" class="btn btn-success" value="Изменить">
+            {% endif %}
+            <br>
+        </form>
+    </div>
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends 'sendman/base.html' %}
+
+{% load static %}
+
+{% block title %}TO{% endblock %}
+
+{%  block content %}
+    <br>
+    <div>
+        <a href="{%  url 'new_recipients' %}">
+            <input type="submit" class="btn btn-success" value="Создать новый список">
+        </a>
+    </div>
+    <br>
+
+    <div id="recipient_list">
+        {% for list in recipients %}
+            <div class="rcpt_list">
+                <b>{{ list.created_at }}</b>
+                <a href="{% url 'rcpt_list' list.pk %}">
+                    <h4 color="green">{{ list }} [{{ list.number }}]</h4>
+                </a>
+                <div>
+                    <a href="{% url 'delete_list' list.pk %}" color="red">Удалить</a>
+                </div>
+            <br>
+            </div>
+        {%  endfor %}
+    </div>
+{% endblock %}
+</body>
+</html>

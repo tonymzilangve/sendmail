@@ -1,0 +1,33 @@
+version: "2.7"
+
+services:
+  redis:
+    image: redis:4-alpine
+    restart: always
+
+  webapp:
+    restart: always
+    build:
+      context: ./emailp2
+    ports:
+      - "8000:8000"
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+  worker:
+    restart: always
+    build:
+      context: ./emailp2
+    volumes:
+      - ./emailp2:/app/src/emailp2
+    command: [ 'celery', '-A', 'emailp2', 'worker' , '-l', 'info', '--pool=solo' ]
+
+  celery-beat:
+    restart: always
+    build: .
+      context: ./emailp2
+    volumes:
+      - ./emailp2:/app/src/emailp2
+    command: ['celery', '-A', 'emailp2', 'beat', '-l', 'INFO' ]
+    depends_on:
+      - worker
+
